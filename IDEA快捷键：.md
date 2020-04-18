@@ -9,3 +9,8 @@ CTRL+ALT+L 格式化代码
 CTRL+ALT+T 快捷Surround With
 
 IDEA修改快捷输入模板：Setting--Editor--Live Templates
+
+CTRL+O	实现
+
+
+
