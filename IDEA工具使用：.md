@@ -12,6 +12,6 @@ IDEA修改快捷输入模板：Setting--Editor--Live Templates
 
 CTRL+O	实现
 
-
+CRTL+ALT+O 清楚多余的import
 
 参数名提示功能(parameter name hints)

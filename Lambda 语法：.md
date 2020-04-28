@@ -1,3 +1,17 @@
+简称闭包
+
+允许把函数作为一个方法的参数
+
+不是所有接口都可以使用lambda表达式来实现。
+
+lambda规定接口中**只能**有一个必须需要被实现的方法
+
+default修饰的方法会有默认实现，不影响lambda使用
+
+接口注解@unctionalIntrtface配合lambda使用
+
+
+
 Lambda 语法：
 
 ```
