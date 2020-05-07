@@ -2,7 +2,7 @@
 
 data数据，在计算机中数据的含义是广泛的，例如视频、音频等都是数据
 
-关系型数据库（Relational DBMS），。
+关系型数据库（Relational DBMS）
 
 表结构
 
@@ -243,3 +243,18 @@ create index indexNmae on mytable
 ​	myisam查询快，支持全文索引
 
 从SQL方面优化
+
+
+
+```sql
+--修改字段为主键
+alter table testoa add constraint testoa_pk primary key(id) 
+--修改字段为自增
+alter table testoa change id id int auto_increment
+
+如果该字段不是主键，需要先设置该字段为主键：
+alter table 表名 add primary key(字段名);
+修改字段为自动增长
+alter table 表名 change 字段名 字段名 字段类型 auto_increment;
+```
+
