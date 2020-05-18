@@ -203,3 +203,165 @@ where
 set更新
 
 foreach
+
+if	where	set	trim	sql片段
+
+### 多表关系
+
+一对多：部门和员工
+
+多对多：学生和课程
+
+一对一：人和身份证
+
+### 实际CRM关系介绍
+
+crm：客户关系管理
+
+crm中一对多
+
+1. 级别 和 客户
+
+   ​	级别：普通，高级，VIP
+
+   ​	客户：和公司或者人有业务往来的群体，专指公司类型客户
+
+   级别对应多个客户
+
+### mysql多表连接查询
+
+内连接
+
+```sql
+--显式
+select 
+  levelid as id 
+from
+  t_level l 
+  inner join t_customer c 
+    on l.`levelid` = c.`clid` 
+where c.cid = '3' 
+--隐式
+select 
+  * 
+from
+  t_level l,
+  t_customer c 
+where l.`levelid` = c.`clid` 
+  and c.`cid` = '4' 
+```
+
+左外连接left outer join
+
+右外连接right out join
+
+交叉连接
+
+#### 查询结果集ResultMap
+
+##### 一对多
+
+```
+<select id="findInfo" resultMap="map1">
+        select * from classes as c ,student as s where c.id=s.class_id and c.id=#{id}
+</select>
+
+<!--映射字段-->
+<resultMap id="map1" type="Classes">
+    <id column="id" property="id"/>
+    <result column="name" property="name"/>
+    <collection property="students" ofType="Student">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="age" property="age"/>
+        <result column="class_id" property="classId"/>
+    </collection>
+</resultMap>
+```
+
+```java
+Classes findInfo(int id);
+```
+
+```java
+private int id;
+private String name;
+
+private List<Student> students;
+```
+
+##### 多对一
+
+```
+<select id="findInfos" resultMap="map2">
+        select * from student as s ,classes as c where s.class_id=c.cid and s.id=#{id}
+</select>
+
+<resultMap id="map2" type="Student">
+    <id column="id" property="id"/>
+    <result column="name" property="name"/>
+    <result column="age" property="age"/>
+    <result column="class_id" property="classId"/>
+    <association property="classes" javaType="Classes">
+        <id column="cid" property="cid"/>
+        <result column="cname" property="cname"/>
+    </association>
+</resultMap>
+```
+
+##### 多对多
+
+数据库三表关联，中间表描述关系
+
+```
+select id="getUserById" resultMap="map3">
+    select * from `user` u inner join role_user rs on u.u_id=rs.`uu_id` inner join role r on r.`r_id`=rs.rr_id where u.u_id=#{u_id}
+</select>
+
+<select id="getRoleById" resultMap="map4">
+    select * from role r inner join role_user rs on r.r_id = rs.rr_id join `user` u on u.`u_id` = rs.`uu_id` where r.`r_id`=#{r_id}
+</select>
+
+
+<resultMap id="map4" type="Role">
+    <id column="r_id" property="rId"/>
+    <result column="r_name" property="rName"/>
+    <collection property="user" ofType="User">
+        <id column="u_id" property="uId"/>
+        <result column="u_name" property="uName"/>
+        <result column="u_sex" property="uSex"/>
+        <result column="u_age" property="uAge"/>
+    </collection>
+</resultMap>
+<resultMap id="map3" type="User">
+    <id property="uId" column="u_id"/>
+    <result column="u_name" property="uName"/>
+    <result column="u_sex" property="uSex"/>
+    <result column="u_age" property="uAge"/>
+    <collection property="roles" ofType="Role">
+        <id column="r_id" property="rId"/>
+        <result column="r_name" property="rName"/>
+    </collection>
+</resultMap>
+```
+
+##### 一对一
+
+```
+<select id="getBoys" resultMap="map5">
+    select * from boys b inner join girls g on b.g_id=g.g_id where b.b_id=#{b_id}
+</select>
+
+
+<resultMap id="map5" type="Boys">
+    <id column="b_id" property="bId"/>
+    <result column="b_name" property="bName"/>
+    <result column="b_id" property="bHobby"/>
+    <result column="b_money" property="bMoney"/>
+    <association property="girls" javaType="Girls">
+        <id property="gId" column="g_id"/>
+        <id property="gName" column="g_name"/>
+        <id property="gAge" column="g_age"/>
+    </association>
+</resultMap>
+```

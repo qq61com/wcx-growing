@@ -19,7 +19,10 @@ Email:qq61com@gmail.com
 - [x] Java-多线程
 - [x] Java-网络编程
 - [x] Java-反射机制
-- [ ] Java-设计模式
+- [x] Java-设计模式
+  - [ ] 待深入
 - [x] spring
-- [ ] spring-mvc
-- [ ] mybatis
+- [x] spring-mvc
+- [x] mybatis
+- [x] mysql基础
+
